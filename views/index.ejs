@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Welcome to the Upload App</h1>
+
+    <% if (session.userId) { %>
+        <p>Hello, <strong><%= session.username %></strong>!</p>
+        <a href="/dashboard">Go to Dashboard</a> | <a href="/logout">Logout</a>
+    <% } else { %>
+        <a href="/login">Login</a> | <a href="/register">Register</a>
+    <% } %>
+
+    <hr>
+
+    <% if (session.userId) { %>
+        <h2>Post a Message</h2>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="message">Message:</label>
+            <input type="text" id="message" name="message" required>
+            <br>
+            <label for="file">File (optional):</label>
+            <input type="file" id="file" name="file">
+            <br>
+            <label for="is_public">Make Public:</label>
+            <input type="checkbox" id="is_public" name="is_public" value="true" checked>
+            <br>
+            <button type="submit">Post</button>
+        </form>
+    <% } %>
+
+    <hr>
+
+    <h2>Public Feed</h2>
+    <ul>
+        <% uploads.forEach(upload => { %>
+            <li>
+                <p><strong>User:</strong> <%= upload.username %></p>
+                <p><strong>Message:</strong> <%= upload.message %></p>
+                <% if (upload.file_path) { %>
+                    <p><strong>File:</strong> <a href="<%= upload.file_path %>" target="_blank">View File</a></p>
+                <% } %>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>

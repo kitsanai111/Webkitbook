@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Welcome, <%= session.username %>!</h1>
+    <a href="/logout">Logout</a>
+
+    <h2>Your Uploads</h2>
+    <ul>
+        <% uploads.forEach(upload => { %>
+            <li>
+                <p><strong>Message:</strong> <%= upload.message %></p>
+                <% if (upload.file_path) { %>
+                    <p><strong>File:</strong> <a href="<%= upload.file_path %>" target="_blank">View File</a></p>
+                <% } %>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>
